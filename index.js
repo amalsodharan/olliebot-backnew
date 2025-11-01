@@ -21,7 +21,9 @@ app.get('/', (req, res) => {
 app.post('/api/signUp', userController.newUser);
 app.post('/api/login', userController.login);
 
-app.post('/api/chat', authenticateToken, chatController.chatModule)
+app.get('/api/me', authenticateToken, userController.userData);
+app.post('/api/chat', authenticateToken, chatController.chatModule);    
+app.post('/api/demo', chatController.chatModule);    
 
 app.listen(PORT, (req, res) => {
     console.log(`Server is running on port ${PORT}....`);

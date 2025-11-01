@@ -51,4 +51,19 @@ const login = async (req, res) => {
     }
 };
 
-export default { newUser, login };
+const userData = async (req, res) => {
+    try {
+        const { Users } = await initDB();
+        const userId = req.user.id;
+        const userFetch = await Users.findOne({ where: { id : userId } });
+        if(!userFetch) res.status(400).json({ message : 'user not found' });
+        userFetch.password = undefined; 
+
+        res.status(200).json({ userFetch });
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({ message: 'Error fetching details' });
+    }
+};
+
+export default { newUser, login, userData };
