@@ -1,6 +1,7 @@
 import { Sequelize, Op } from 'sequelize';
 import dotenv from 'dotenv';
 import UserModel from './modules/userModel.js';
+import mysql2 from 'mysql2';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ export default async function connectDB() {
     process.env.DB_PASSWORD,
     {
       dialect: 'mysql',
+      dialectModule: mysql2,
       host: process.env.DB_HOST,
       port: process.env.DB_PORT,
       dialectOptions: { decimalNumbers: true },
