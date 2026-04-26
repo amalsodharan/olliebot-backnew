@@ -4,22 +4,9 @@ import UserModel from './modules/userModel.js';
 
 dotenv.config();
 
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    dialect: 'mysql',
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    dialectOptions: { decimalNumbers: true },
-    logging: false,
-  }
-);
-
-const Users = UserModel(sequelize, Sequelize);
-
-const Models = { Users, Op };
+let sequelize;
+let Users;
+let Models;
 
 const connection = {};
 
@@ -28,6 +15,22 @@ export default async function connectDB() {
     console.log('=> Using existing connection.');
     return Models;
   }
+
+  sequelize = new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
+    {
+      dialect: 'mysql',
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      dialectOptions: { decimalNumbers: true },
+      logging: false,
+    }
+  );
+
+  Users = UserModel(sequelize, Sequelize);
+  Models = { Users, Op };
 
   await sequelize.sync();
   await sequelize.authenticate();
