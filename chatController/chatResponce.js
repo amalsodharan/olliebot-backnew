@@ -8,7 +8,7 @@ let conversationHistory = [];
 
 const getChatGPTResponse = async (prompt, chatStatus) => {
   const startTime = Date.now();
-  if(chatStatus == 'Started'){
+  if (chatStatus == 'Started') {
     conversationHistory = [];
     console.log("started only");
   }
@@ -26,6 +26,7 @@ const getChatGPTResponse = async (prompt, chatStatus) => {
       {
         model: 'mistralai/mixtral-8x7b-instruct',
         messages: conversationHistory, // include full chat history
+        max_tokens: 1024,
       },
       {
         headers: {
