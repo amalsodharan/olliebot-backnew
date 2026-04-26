@@ -25,6 +25,10 @@ app.get('/api/me', authenticateToken, userController.userData);
 app.post('/api/chat', authenticateToken, chatController.chatModule);    
 app.post('/api/demo', chatController.chatModule);    
 
-app.listen(PORT, (req, res) => {
-    console.log(`Server is running on port ${PORT}....`);
-})
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}....`);
+    });
+}
+
+export default app;
